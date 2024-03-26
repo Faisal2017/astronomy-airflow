@@ -5,7 +5,7 @@ from airflow.providers.snowflake.hooks.snowflake import SnowflakeHook
 
 
 @dag(start_date=datetime(2023, 1, 1), schedule=None, catchup=False)
-def fetch_cookies_data():
+def snowflake_example():
     @task
     def fetch_data_from_snowflake():
         # Connect to Snowflake
@@ -34,4 +34,4 @@ def fetch_cookies_data():
     store(transform_data(fetch_data_from_snowflake()))
 
 
-dag = fetch_cookies_data()
+dag = snowflake_example()

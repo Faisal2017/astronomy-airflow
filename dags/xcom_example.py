@@ -13,17 +13,27 @@ with DAG(
         schedule_interval='@daily',
         catchup=False,
 ):
-    @task
-    def peter_task(ti=None):
-        return 'iphone'
-
-
-    @task
-    def bryan_task(moble_phone):
-        print(moble_phone)
-
-
-    bryan_task(peter_task())
+    # @task
+    # def peter_task(ti=None):
+    #     return 'iphone'
+    #
+    #
+    # @task
+    # def bryan_task(moble_phone):
+    #     print(moble_phone)
+    #
+    #
+    # bryan_task(peter_task())
 
 # above will return 'iphone' when run and this can be seen in Admin -> XComs. return_value is default key
 
+    @task
+    def peter_task(ti=None):
+        ti.xcom_push(key='mobile_phone', value='iphone')
+
+    @task
+    def bryan_task(ti=None):
+        phone = ti.xcom_pull(task_ids='peter_task', key='mobile_phone')
+        print(phone)
+
+    peter_task() >> bryan_task()

@@ -1,6 +1,8 @@
 # Xcom is a way to communicate between tasks
 # as they are independent and could be running on separate machines
 
+# Xcom data should be small-ish (db dependant) and JSON serializable
+# SQL lite meta store = 2 Gb limit on Xcom data, Postgres is 1 Gb, etc
 
 from airflow import DAG
 from airflow.decorators import task
